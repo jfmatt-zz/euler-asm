@@ -24,7 +24,7 @@ section .text
 global _start
 
 _start:
-				mov ebx, 10
+				mov ebx, 1000
 
 				mov dh, 3								;3-loop (like fizz)
 				mov dl, 5								;5-loop (like buzz)
@@ -60,7 +60,7 @@ noadd:
 
 print:
 				;; need at most 10 digits (decimal)
-				add esp, 10
+				sub esp, 10
 				mov edi, esp
 				
 digit:
@@ -93,6 +93,6 @@ reverse:												;built rtl, now needs to be flipped
 				
 				write STDOUT, esp, edx
 
-				sub esp, 10							;stack-neutral
+				add esp, 10							;stack-neutral
 				
 				exit 0
