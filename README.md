@@ -20,3 +20,7 @@ This isn't even hard enough to be a Project Euler question, but it was enough to
 More basic arithmetic; introduces the full form of the `div` operation (using `CDQ` to divide 32-bit numbers).
 
 Successfully prints an integer answer to the console in decimal (`itoa` functionality).
+
+###2. Even Fibonacci numbers
+
+Pretty straightforward. Uses the integer print from problem 1.
