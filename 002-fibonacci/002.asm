@@ -1,6 +1,5 @@
-				;; Project Euler: Problem 1
+				;; Project Euler Problem 2
 				;; James Matthews, 2013
-
 %macro write 3
 				mov eax, 4
 				mov ebx, %1
@@ -15,55 +14,42 @@
 %endmacro
 
 %define STDOUT 1
-				
-section .bss
 
 section .data
-				
+
+section .bss
+
 section .text
 global _start
-
 _start:
-				mov ebx, 1000
+				mov eax, 0       ;fib0
+				mov ebx, 1       ;fib1
+				mov edx, 0       ;total
+				mov edi, 4000000 ;max
 
-				mov dh, 3								;3-loop (like fizz)
-				mov dl, 5								;5-loop (like buzz)
-				xor edi, edi						;incrementor
-				xor eax, eax						;total
-				
+				jmp odd          ;don't need to add starting 0, so let's
+				                 ;skip ahead by one at least
+loop:
+				test eax, 0x1
+				jnz odd
+				add edx, eax
+odd:
+				;move to next fib
+				mov ecx, ebx ;n + 1 cache in ecx
+				add ebx, eax ;n + 2 in ebx
+				mov eax, ecx ;n + 1 to eax
 
-				dec ebx									;zero-index to match PE
-				jz print								;let's not fail
-  startloop:
-				xor si, si							;flag for whether to add this one
+				cmp eax, edi
+				jb loop
 
-				inc di									;bump loops
-				dec dh
-				dec dl
-
-				test dh, dh							;trip flag if divisible by 3
-				jnz nothree
-				mov si, 1
-				mov dh, 3
-  nothree:
-				test dl, dl							;trip flag if divisible by 5
-				jnz nofive
-				mov si, 1
-				mov dl, 5
-  nofive:
-				test si, si							;check if divisible-flag was set
-				jz noadd
-				add eax, edi							;add this n
-  noadd:
-				dec ebx
-				jnz startloop
-
-  print:
-				;; need at most 10 digits (decimal)
+				;push total to eax so copypasta printer works
+				mov eax, edx
+print:
+        ;; need at most 10 digits (decimal)
 				sub esp, 10
 				mov edi, esp
 				
-  digit:
+digit:
 				cdq											;extend to edx
 				mov esi, 0xA
 				div esi									;divide by 10
@@ -80,7 +66,7 @@ _start:
 				sub edx, esp
 				mov esi, esp						;si at first char
 				dec edi									;di at last char
-  reverse:											;built rtl, now needs to be flipped
+reverse:											;built rtl, now needs to be flipped
 				mov al, [esi]
 				mov ah, [edi]
 				mov [esi], ah
