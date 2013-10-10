@@ -1,0 +1,20 @@
+%ifndef MACROS_MAC
+%define MACROS_MAC
+
+%macro write 3
+				mov eax, 4
+				mov ebx, %1
+				mov ecx, %2
+				mov edx, %3
+				int 0x80
+%endmacro
+%macro exit 1
+				mov eax, 1
+				mov ebx, %1
+				int 0x80
+%endmacro
+
+%define STDOUT 1
+
+
+%endif
