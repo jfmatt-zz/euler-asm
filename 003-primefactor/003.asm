@@ -12,12 +12,12 @@ section .text
 global _start
 
 _start:
-				mov edi, 23486172
+				mov edi, 0x80000000
 				mov esi, edi
 				
 factorLoop:
 				mov eax, edi
-				cdq
+				xor edx, edx
 				div esi
 				test edx, edx  ;remainder
 				jz isFactor
@@ -61,14 +61,20 @@ prime_two:
 				mov ebx, 1
 				ret
 prime_main:
+				test eax, 0x1 ;test if even
+				jnz prime_odd
+				xor ebx, ebx
+				ret
+prime_odd:
 				mov esi, eax ;cache against div
 				mov ecx, 1   ;iterator
 				mov ebx, 1   ;return value - assume prime, fail fast if not  
+
 prime_loop:
 				inc ecx     ;starts at 2
 
 				mov eax, esi  ;get original number back
-				cdq
+				xor edx, edx
 				div ecx       ;divide by current potential factor
 				test edx, edx ;look for remainder
 				jnz prime_notthisfactor 
