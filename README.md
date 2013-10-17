@@ -30,3 +30,5 @@ Pretty straightforward. Uses the integer print from problem 1.
 Working, but can't actually answer the Project Euler question because the problem assigned is greater than 2^32.
 
 Will need to figure out 64-bit math, either native or emulated, before I can go any farther - preferrably emulated, because that can be extended indefinitely. Once I've done this one with emulation, I'll switch to the 64-bit instruction set to make later problems easier.
+
+As procrastination against hard math, the answer can now be printed in any base.

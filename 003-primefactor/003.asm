@@ -1,6 +1,12 @@
 ;;Project Euler Problem 3
 ;;James Matthews, 2013
 
+;; Prints the greatest prime factor of DIVIDEND
+;;  rendered in base BASE
+				
+%define DIVIDEND     38
+%define BASE         0x10
+
 %include "macros.mac"
 %include "lib.asm"
 
@@ -11,9 +17,18 @@ section .bss
 section .text
 global _start
 
+%macro PRINT 0
+				mov ebx, BASE
+				call printBase
+%endmacro
+				
 _start:
-				mov edi, 0x80000000
+				mov edi, DIVIDEND
 				mov esi, edi
+
+				; safety first
+				test esi, esi
+				jz breakLoop
 				
 factorLoop:
 				mov eax, edi
@@ -35,15 +50,15 @@ isFactor:
 				test ebx, ebx
 				jnz breakLoop
 
-				; stop at 0; this means something's broken
 				dec esi
+				; stop at 0; if this happens something's broken
 				jz breakLoop
 				
 				jmp factorLoop
 breakLoop:
 				
 				mov eax, esi
-				call printI
+				PRINT
 
 				exit 0
 
